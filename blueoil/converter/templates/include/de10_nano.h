@@ -322,9 +322,11 @@ void RunTCA(unsigned long input_addr, unsigned long output_addr, unsigned long k
     csr[static_cast<std::size_t>(Csr::bnqEnable)] = p.bnqEnable;
 
     // std::cout << "Status " << csr[Csr::statusRegister)] << std::endl;
+    __asm__ volatile ("isb");
     csr[static_cast<std::size_t>(Csr::start)] = 1;
 
     // std::cout << "Status " << csr[Csr::statusRegister)] << std::endl;
+    __asm__ volatile ("isb");
     while (csr[static_cast<std::size_t>(Csr::statusRegister)] != 127) {
         // std::cout << "Status " << csr[Csr::statusRegister] << std::endl;
         continue;
